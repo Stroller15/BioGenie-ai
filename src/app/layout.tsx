@@ -4,11 +4,11 @@ import { GeistSans } from 'geist/font/sans';
 
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import DotPattern from "@/components/magicui/dot-pattern";
+import GridPattern from "@/components/magicui/grid-pattern";
 
 
 export const metadata: Metadata = {
-  title: "twtBio-AI",
+  title: "BioGenie | Twitter bio generator",
   description: "Twitter bio generator by AI",
 };
 
@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn(GeistSans.variable, "font-sans")}>
-        <DotPattern width={40} height={40} className="-z-10 "/>
+        <GridPattern width={60} height={60} className="-z-10 opacity-60"/>
         {children}
       </body>
     </html>

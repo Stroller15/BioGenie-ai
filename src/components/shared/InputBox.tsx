@@ -4,9 +4,16 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Slider } from "@/components/ui/slider"
-
+import { Slider } from "@/components/ui/slider";
+import MetaIcon from "../icons/MetaIcon";
+import MistralIcon from "../icons/MistralIcon";
+import GemmaIcon from "../icons/GemmaIcon";
+import WhisperIcon from "../icons/WhisperIcon";
 import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch"
+
+
+
 import {
   Form,
   FormControl,
@@ -16,7 +23,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -24,10 +30,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import MetaIcon from "../icons/MetaIcon";
-import MistralIcon from "../icons/MistralIcon";
-import GemmaIcon from "../icons/GemmaIcon";
-import WhisperIcon from "../icons/WhisperIcon";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Info, SendHorizontal } from "lucide-react";
+import { Textarea } from "../ui/textarea";
 
 const formSchema = z.object({
   model: z.string().min(1, "Model is required"),
@@ -79,7 +89,6 @@ const InputBox = () => {
     console.log(values);
   }
 
-
   return (
     <div className="relative flex flex-col items-start gap-8">
       <Form {...form}>
@@ -88,8 +97,8 @@ const InputBox = () => {
           className="grid w-full items-start gap-6"
         >
           <fieldset className="grid gap-6 rounded-[8px] border p-4 bg-background/10 backdrop-blur-sm">
-            <legend>User Inputs</legend>
-            
+            <legend>AI Settings</legend>
+
             <div className="grid gap-3">
               <FormField
                 control={form.control}
@@ -182,22 +191,134 @@ const InputBox = () => {
               <FormField
                 control={form.control}
                 name="creativeness"
-                render={({ field: {value, onChange} }) => (
+                render={({ field: { value, onChange } }) => (
                   <FormItem>
                     <FormLabel className="flex items-center justify-between pb-2">
-                      <span>Creativity</span>
+                      <span className="flex items-center justify-center">
+                        Creativity
+                        <Tooltip>
+                          <TooltipTrigger>
+                            <Info className="w-4 h-4 ml-1 cursor-pointer" />
+                          </TooltipTrigger>
+                          <TooltipContent
+                            sideOffset={25}
+                            collisionPadding={20}
+                            className="max-w-sm"
+                          >
+                            <p>
+                              A higher value on slider produces more creative
+                              and surprising bios, while a lower value stick to
+                              more predictable and conventional style.
+                            </p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </span>
+
                       <span>{value}</span>
-                     </FormLabel>
-                    <FormControl> 
-                    <Slider defaultValue={[1]} min={0} max={2} step={0.1} onValueChange={(val) => onChange(val)}/>
+                    </FormLabel>
+                    <FormControl>
+                      <Slider
+                        defaultValue={[1]}
+                        min={0}
+                        max={2}
+                        step={0.1}
+                        onValueChange={(val) => onChange(val[0])}
+                      />
                     </FormControl>
                   </FormItem>
                 )}
               />
             </div>
-                      
-            <Button type="submit">Submit</Button>
           </fieldset>
+
+          <fieldset className="grid gap-6 rounded-[8px] border p-4 bg-background/10 backdrop-blur-sm">
+            <legend>User Input</legend>
+
+            <div className="grid gap-3">
+              <FormField
+                control={form.control}
+                name="content"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="flex items-center justify-between pb-2">
+                      About Yourself
+                    </FormLabel>
+                    <FormControl>
+                      <Textarea
+                        {...field}
+                        placeholder="Add your old linkedin bio or write few sentences about you"
+                        className="min-h-[10rem]"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <FormField
+                control={form.control}
+                name="type"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="flex items-center justify-between pb-2">
+                      Type
+                    </FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select Value" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="personal">Personal</SelectItem>
+                        <SelectItem value="brand">Brand</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="tone"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      Tone
+                    </FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select Value" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="professional">Professional</SelectItem>
+                        <SelectItem value="casual">Casual</SelectItem>
+                        <SelectItem value="sarcastic">Sarcastic</SelectItem>
+                        <SelectItem value="funny">Funny</SelectItem>
+                        <SelectItem value="passionate">Passionate</SelectItem>
+                        <SelectItem value="thoughtful">Thoughtful</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <div className="grid gap-3">
+              <FormField
+                control={form.control}
+                name="emojis"
+                render={({ field }) => (
+                  <FormItem className="flex item-center">
+                    <FormLabel className="text-sm mr-4">
+                      Add Emojis
+                    </FormLabel>
+                    <Switch checked={field.value} onCheckedChange={field.onChange}  className="!my-0"/>
+                  </FormItem>
+                )}
+              />
+            </div>
+          </fieldset>
+          <Button className="rounded" type="submit">Generate <SendHorizontal className="ml-1" size={15}/></Button>
         </form>
       </Form>
     </div>

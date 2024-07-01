@@ -8,8 +8,8 @@ import GridPattern from "@/components/magicui/grid-pattern";
 
 
 export const metadata: Metadata = {
-  title: "BioGenie | Twitter bio generator",
-  description: "Twitter bio generator by AI",
+  title: "BioGenie | Linkedin bio generator",
+  description: "Linkedin bio generator by AI",
 };
 
 export default function RootLayout({
@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn(GeistSans.variable, "font-sans")}>
+      <body className={cn(GeistSans.variable, "font-sans ")}>
         <GridPattern width={60} height={60} className="-z-10 opacity-60"/>
         {children}
       </body>

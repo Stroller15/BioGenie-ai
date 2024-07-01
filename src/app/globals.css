@@ -66,6 +66,10 @@
     }
   }
 
+  html {
+    @apply text-white
+  }
+
   @layer base {
     * {
       @apply border-border;

@@ -4,6 +4,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { Slider } from "@/components/ui/slider"
 
 import { Button } from "@/components/ui/button";
 import {
@@ -77,17 +78,18 @@ const InputBox = () => {
     // ✅ This will be type-safe and validated.
     console.log(values);
   }
-  console.log(WhisperIcon);
+
 
   return (
     <div className="relative flex flex-col items-start gap-8">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="grid w-full items-start gpa-6"
+          className="grid w-full items-start gap-6"
         >
           <fieldset className="grid gap-6 rounded-[8px] border p-4 bg-background/10 backdrop-blur-sm">
             <legend>User Inputs</legend>
+            
             <div className="grid gap-3">
               <FormField
                 control={form.control}
@@ -98,6 +100,7 @@ const InputBox = () => {
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
+                      <FormLabel>Model</FormLabel>
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Select a AI model" />
@@ -175,7 +178,24 @@ const InputBox = () => {
               />
             </div>
 
-            
+            <div className="grid gap-3">
+              <FormField
+                control={form.control}
+                name="creativeness"
+                render={({ field: {value, onChange} }) => (
+                  <FormItem>
+                    <FormLabel className="flex items-center justify-between pb-2">
+                      <span>Creativity</span>
+                      <span>{value}</span>
+                     </FormLabel>
+                    <FormControl> 
+                    <Slider defaultValue={[1]} min={0} max={2} step={0.1} onValueChange={(val) => onChange(val)}/>
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </div>
+                      
             <Button type="submit">Submit</Button>
           </fieldset>
         </form>

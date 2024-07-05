@@ -3,6 +3,7 @@ import AnimatedGradientText from '../components/magicui/animated-gradient-text';
 import { ChevronRight, Sparkles } from "lucide-react";
 import InputBox from "@/components/shared/InputBox";
 import OutputBox from "@/components/shared/OutputBox";
+import { BioContextProvider } from "@/context/BioContext";
 
 export default function Home() {
   return (
@@ -19,8 +20,11 @@ export default function Home() {
       <h1 className="font-extrabold text-7xl text-center w-full lg:w-[90%] mx-auto mt-4">Instantly create the perfect Linkedin bio with AI</h1>
       <p className="text-lg text-red-400">Answer a few questions and BioGenie creates a bio that truly represents you</p>
       </div>
+      
+      <BioContextProvider>
       <InputBox />
       <OutputBox />
+      </BioContextProvider>
     </main>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -11,7 +11,7 @@ import GemmaIcon from "../icons/GemmaIcon";
 import WhisperIcon from "../icons/WhisperIcon";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch"
-import { Info, SendHorizontal } from "lucide-react";
+import { Info, Loader2, SendHorizontal } from "lucide-react";
 import { Textarea } from "../ui/textarea";
 import  {generateBio}  from "@/lib/actions";
 
@@ -38,6 +38,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { BioContext } from "@/context/BioContext";
 
 
 const formSchema = z.object({
@@ -83,8 +84,11 @@ const InputBox = () => {
     },
   });
 
+  const {setOutput, setLoading, loading} = useContext(BioContext)
+
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    setLoading(true);
 
     const userInputValues = `
     User Input: ${values.content},
@@ -94,9 +98,11 @@ const InputBox = () => {
     `
 try{
   const {data} = await generateBio(userInputValues, values.temperature, values.model)
-  console.log(data);
+  setOutput(data);
+  setLoading(false);
 }catch(e) {
   console.log(e);
+  setLoading(false);
 }
 }
 
@@ -329,7 +335,11 @@ try{
               />
             </div>
           </fieldset>
-          <Button className="rounded" type="submit">Generate <SendHorizontal className="ml-1" size={15}/></Button>
+          <Button className="rounded" type="submit" disabled={loading}>
+            {loading && <Loader2 className="w-4 h-4 mr-2 animate-spin"/>}
+            Generate 
+            <SendHorizontal className="ml-1" size={15}/>
+          </Button>
         </form>
       </Form>
     </div>

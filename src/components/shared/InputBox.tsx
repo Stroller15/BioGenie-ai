@@ -11,7 +11,9 @@ import GemmaIcon from "../icons/GemmaIcon";
 import WhisperIcon from "../icons/WhisperIcon";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch"
-
+import { Info, SendHorizontal } from "lucide-react";
+import { Textarea } from "../ui/textarea";
+import  {generateBio}  from "@/lib/actions";
 
 
 import {
@@ -36,12 +38,11 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Info, SendHorizontal } from "lucide-react";
-import { Textarea } from "../ui/textarea";
+
 
 const formSchema = z.object({
   model: z.string().min(1, "Model is required"),
-  creativeness: z
+  temperature: z
     .number()
     .min(0, "Temperature must be atleast 0")
     .max(2, "Temerature must be at most 1"),
@@ -74,7 +75,7 @@ const InputBox = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       model: "llama3-8b-8192",
-      creativeness: 1,
+      temperature: 1,
       content: "",
       type: "personal",
       tone: "professional",
@@ -83,11 +84,21 @@ const InputBox = () => {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+
+    const userInputValues = `
+    User Input: ${values.content},
+    Bio Tone: ${values.tone},
+    Bio Type: ${values.type},
+    Add Emojis: ${values.emojis}
+    `
+try{
+  const {data} = await generateBio(userInputValues, values.temperature, values.model)
+  console.log(data);
+}catch(e) {
+  console.log(e);
+}
+}
 
   return (
     <div className="relative flex flex-col items-start gap-8">
@@ -190,7 +201,7 @@ const InputBox = () => {
             <div className="grid gap-3">
               <FormField
                 control={form.control}
-                name="creativeness"
+                name="temperature"
                 render={({ field: { value, onChange } }) => (
                   <FormItem>
                     <FormLabel className="flex items-center justify-between pb-2">

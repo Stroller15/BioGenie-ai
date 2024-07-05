@@ -21,6 +21,10 @@ const config = {
       fontFamily:{
         sans: ['var(--font-geist-sans)']
       },
+      screens:{
+        xs: '380px',
+        slg: '840px'
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

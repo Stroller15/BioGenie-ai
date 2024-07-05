@@ -18,7 +18,7 @@ export default function Home() {
         </AnimatedGradientText>
       </Link>
       <h1 className="font-extrabold text-4xl md:text-5xl slg:text-6xl lg:text-7xl text-center w-full lg:w-[90%] mx-auto mt-4">Instantly create the perfect Linkedin bio with AI</h1>
-      <p className="text-sm sm:text-base md:text-lg text-black">Just answer a few questions and BioGenie creates a bio that truly represents you</p>
+      <p className="text-sm sm:text-base md:text-lg text-black-400">Just answer a few questions and BioGenie creates a bio that truly represents you</p>
       </div>
       
       <BioContextProvider>

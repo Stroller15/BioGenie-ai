@@ -30,9 +30,7 @@ BioGenie is an innovative web application designed to help users create captivat
 ## Features/Use case
 - **AI-Powered Bio Generation:** Generate high-quality, personalized LinkedIn bios using advanced AI algorithms.
   
-- **Customizable Templates:** Choose from a variety of professional templates to match your career and industry.
-  
-- **Real-time Editing:** Edit and refine your bios in real-time with an intuitive editor.
+- **Customizable Options:** Choose from a variety of professional Options to match your career and industry.
   
 - **User-Friendly Interface:** Enjoy a simple and engaging user experience designed for ease of use and efficiency.
 

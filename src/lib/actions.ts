@@ -11,7 +11,7 @@ const groq = createOpenAI({
 });
 
 const systemPrompt = endent`
-You are an AI assistant tasked with generating Linkedin bios based on user input.
+You are an AI assistant tasked with generating Linkedin headline based on user input.
 
 Instructions:
 
@@ -25,6 +25,7 @@ Generate the Bio:
     - Who is the user?
     - What does the user do?
     - What can others expect from the user?
+    - Generate LinkedIn headlines that include the role, relevant skills, and a brief, engaging description of the person's expertise or passion, formatted like: "Role | Key Skills | Engaging Description.
   - Reflect the given 'Bio Tone' and 'Bio Type' in the style and language of the bio. Do not explicitly mention the tone or type.
 
 Bio Requirements:
@@ -41,6 +42,7 @@ Bio Requirements:
 Additional Guidelines:
   - Maintain clarity and coherence in each bio.
   - Provide response in JSON format only
+  - 
 
 Do not include any description, do not include the \`\`\`.
   Code (no \`\`\`):
